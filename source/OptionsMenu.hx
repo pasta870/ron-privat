@@ -26,9 +26,15 @@ class OptionsMenu extends MusicBeatState
 
 	var options:Array<OptionCategory> = [
 		new OptionCategory("Gameplay", [
+                        #if mobileC
+			new CustomControls("Edit a mobile controls..."),
+			#end
 			new DFJKOption(controls),
 			new DownscrollOption("Change the layout of the strumline."),
 			new GhostTapOption("Ghost Tapping is when you tap a direction and it doesn't give you a miss."),
+                        #if mobileC
+			new FastValue("Switch speed of changing value in bottom. (e.g. offset)"),
+			#end
 			new Judgement("Customize your Hit Timings (LEFT or RIGHT)"),
 			#if desktop
 			new FPSCapOption("Cap your FPS"),
@@ -115,6 +121,10 @@ class OptionsMenu extends MusicBeatState
 
 		FlxTween.tween(versionShit,{y: FlxG.height - 18},2,{ease: FlxEase.elasticInOut});
 		FlxTween.tween(blackBorder,{y: FlxG.height - 18},2, {ease: FlxEase.elasticInOut});
+
+                #if mobileC
+		addVirtualPad(FULL, A_B);
+		#end
 
 		super.create();
 	}
