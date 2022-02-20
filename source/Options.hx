@@ -97,6 +97,22 @@ class DFJKOption extends Option
 	{
 		return "Key Bindings";
 	}
+
+#if mobileC
+class CustomControls extends Option
+{
+	public function new(desc:String) {
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool {
+		FlxG.switchState(new mobile.ControlsState());
+		return true;
+	}
+
+	private override function updateDisplay():String
+		return "Mobile controls";
 }
 
 class CpuStrums extends Option
@@ -406,9 +422,10 @@ class FPSCapOption extends Option
 	}
 	
 	override function right():Bool {
-		if (FlxG.save.data.fpsCap >= 290)
+                #if mobileC
+		if (FlxG.save.data.fpsCap >= 90)
 		{
-			FlxG.save.data.fpsCap = 290;
+			FlxG.save.data.fpsCap = 90;
 			(cast (Lib.current.getChildAt(0), Main)).setFPSCap(290);
 		}
 		else
@@ -419,8 +436,8 @@ class FPSCapOption extends Option
 	}
 
 	override function left():Bool {
-		if (FlxG.save.data.fpsCap > 290)
-			FlxG.save.data.fpsCap = 290;
+		if (FlxG.save.data.fpsCap > 90)
+			FlxG.save.data.fpsCap = 90;
 		else if (FlxG.save.data.fpsCap < 60)
 			FlxG.save.data.fpsCap = Application.current.window.displayMode.refreshRate;
 		else
